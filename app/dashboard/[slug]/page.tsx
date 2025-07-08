@@ -6,6 +6,21 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import { Item } from "@radix-ui/react-dropdown-menu";
+
+type Order = {
+    id: string,
+    vendor_id: string, 
+    user_id: string,
+    total_price: number,
+    client_email: string
+}
+
+type OrderItem = {
+    id: string, 
+    item_name: string,
+    order_id: string
+}
 
 export default function VendorPage() {
     const params = useParams();
@@ -16,34 +31,37 @@ export default function VendorPage() {
     const [orders, setOrders] = useState<any>([]);
     const [orderItems, setOrderItems] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const [email, setEmail] = useState<string>("");
+
+    useEffect(() => {
+        const fetchEmail = async () => {
+            const { data: authData } = await supabase.auth.getUser();
+            setEmail(authData?.user?.email || "");
+        }
+        fetchEmail();
+    }, []);
 
     const fetchData = async () => {
         setLoading(true);
-        setError(null);
         try {
-            const { data: authData, error: authError } = await supabase.auth.getUser();
-            if (authError) throw authError;
-            const { data: vendorData, error: vendorError } = await supabase.from('vendors').select().eq("slug", slug).single();
-            if (vendorError) throw vendorError;
+            const { data: authData } = await supabase.auth.getUser();
+            const { data: vendorData } = await supabase.from('vendors').select().eq("slug", slug).single();
             if(vendorData && vendorData.manager !== authData?.user?.id) {
                 window.location.href = '/';
                 return;
             }
             setVendor(vendorData);
 
-            const { data: orderData, error: orderError } = await supabase.from('orders').select().eq("vendor_id", vendorData.id);
-            if (orderError) throw orderError;
+            const { data: orderData } = await supabase.from('orders').select().eq("vendor_id", vendorData.id);
             setOrders(orderData);
 
-            const { data: orderItemsData, error: orderItemsError } = await supabase.from('order_items').select();
-            if (orderItemsError) throw orderItemsError;
+            const { data: orderItemsData } = await supabase.from('order_items').select();
             setOrderItems(orderItemsData || []);
-        } catch (err: any) {
-            setError(err.message || "An error occurred fetching data.");
-        } finally {
+        }
+        finally {
             setLoading(false);
         }
+
     };
 
     useEffect(() => {
@@ -67,19 +85,19 @@ export default function VendorPage() {
     }, [slug]);
 
     const resolveOrder = async (orderId: string) => {
-        try {
-            const { error } = await supabase.from("orders").delete().eq("id", orderId);
-            if (error) setError(error.message);
-        } catch (err: any) {
-            setError(err.message || "Failed to resolve order.");
-        }
+        await supabase.from("orders").delete().eq("id", orderId);
+        
+        await fetch('/api/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, subject: 'Your FTMarketplace Order Completed', text: 'Your food is ready, please arrive soon!', html: '<strong>Your food is ready, please arrive soon!</strong>' }),
+        });
     };
 
     if (loading) {
         return <div className="text-center text-gray-500 dark:text-gray-400 py-10">Loading...</div>;
-    }
-    if (error) {
-        return <div className="text-center text-red-500 dark:text-red-400 py-10">{error}</div>;
     }
     if (!vendor) {
         return <div className="text-center text-gray-500 dark:text-gray-400 py-10">Vendor not found.</div>;
@@ -103,18 +121,27 @@ export default function VendorPage() {
                     <p className="text-lg text-gray-600 dark:text-gray-300 text-center mb-6">Current Orders</p>
                     <div className="space-y-6 w-full">
                         {orders && orders.length > 0 ? (
-                            orders.map((order: any) => (
-                                <div key={order.id} className="bg-white dark:bg-gray-900 p-4 rounded-lg shadow border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-                                    <h3 className="text-lg font-semibold mb-2">Order ID: {order.id}</h3>
-                                    <h4 className="text-md font-medium mb-1">Items:</h4>
-                                    <ul className="list-disc list-inside mb-3">
-                                        {orderItems.filter(item => item.order_id === order.id).map((item: any) => (
-                                            <li key={item.id}>{item.item_name} - ${item.item_price}</li>
-                                        ))}
-                                    </ul>
-                                    <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={() => resolveOrder(order.id)}>
-                                        Resolve Order
-                                    </Button>
+                            orders.map((order: Order) => (
+                                <div
+                                    key={order.id}
+                                    className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 flex flex-col md:flex-row md:items-center md:justify-between gap-6 hover:shadow-2xl transition-all duration-200"
+                                >
+                                    <div className="flex-1 min-w-0">
+                                        <h3 className="text-xl font-bold mb-2 truncate">Order ID: <span className="font-mono text-base font-medium">{order.id}</span></h3>
+                                        <h4 className="text-md font-semibold mb-1 text-blue-700 dark:text-blue-400">Items:</h4>
+                                        <ul className="list-disc list-inside mb-3 pl-4">
+                                            {orderItems.filter(item => item.order_id === order.id).map((item: OrderItem) => (
+                                                <li key={item.id} className="text-base">{item.item_name}</li>
+                                            ))}
+                                        </ul>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">User Email: <span className="font-mono">{order.client_email}</span></p>
+                                    </div>
+                                    <div className="flex flex-col items-end min-w-[160px] md:ml-8 gap-3">
+                                        <span className="text-lg font-semibold text-blue-700 dark:text-blue-400">Total: <span className="font-bold">${order.total_price}</span></span>
+                                        <Button className="bg-green-600 hover:bg-green-700 text-white w-full px-6 py-2 rounded-lg shadow-md" onClick={() => resolveOrder(order.id)}>
+                                            Resolve Order
+                                        </Button>
+                                    </div>
                                 </div>
                             ))
                         ) : (

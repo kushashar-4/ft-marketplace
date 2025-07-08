@@ -9,14 +9,20 @@ export default function Vendors() {
     const supabase = createClient();
     const [vendors, setVendors] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [cuisineQuery, setCuisineQuery] = useState("")
 
     useEffect(() => {
-        const fetchVendors = async () => {
-            const { data } = await supabase.from('vendors').select();
-            setVendors(data || []);
-            setLoading(false);
-        };
-        fetchVendors();
+        // const fetchVendors = async () => {
+        //     const { data } = await supabase.from('vendors').select();
+        //     setVendors(data || []);
+        //     setLoading(false);
+        // };
+        // fetchVendors();
+        fetch('/api/query-database?tableName=vendors').then(res => res.json()).then((data) => {
+            setVendors(data.data || []);
+            setLoading(false)
+        })
     }, []);
 
     return (
@@ -31,6 +37,7 @@ export default function Vendors() {
                             <ThemeSwitcher />
                         </div>
                     </div>
+                    <input type="text" onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search vendors..." className="w-full max-w-xs p-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition" />
                 </nav>
                 <section className="w-full max-w-xl mt-16 flex flex-col items-center gap-8">
                     <h1 className="text-4xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-2">Vendors</h1>
@@ -40,7 +47,7 @@ export default function Vendors() {
                     ) : (
                         <ul className="space-y-4 w-full">
                             {vendors.length > 0 ? (
-                                vendors.map((vendor: any) => (
+                                vendors.filter(vendor => vendor.name.toLowerCase().includes(searchQuery.toLowerCase())).map((vendor: any) => (
                                     <li key={vendor.id}>
                                         <Link
                                             href={`/vendors/${vendor.slug}`}
