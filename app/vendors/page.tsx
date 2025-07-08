@@ -13,16 +13,12 @@ export default function Vendors() {
     const [cuisineQuery, setCuisineQuery] = useState("")
 
     useEffect(() => {
-        // const fetchVendors = async () => {
-        //     const { data } = await supabase.from('vendors').select();
-        //     setVendors(data || []);
-        //     setLoading(false);
-        // };
-        // fetchVendors();
-        fetch('/api/query-database?tableName=vendors').then(res => res.json()).then((data) => {
-            setVendors(data.data || []);
-            setLoading(false)
-        })
+        const fetchVendors = async () => {
+            const { data } = await supabase.from('vendors').select();
+            setVendors(data || []);
+            setLoading(false);
+        };
+        fetchVendors();
     }, []);
 
     return (

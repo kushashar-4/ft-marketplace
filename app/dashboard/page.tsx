@@ -2,6 +2,13 @@ import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 
+type Vendor = {
+    id: number,
+    name: string,
+    location: string,
+    slug: string
+}
+
 export default async function Dashboard() {
     const supabase = await createClient();
     const { data: authData } = await supabase.auth.getUser();
@@ -25,7 +32,7 @@ export default async function Dashboard() {
                     <p className="text-lg text-gray-600 dark:text-gray-300 text-center mb-6">Your Food Trucks</p>
                     <div className="space-y-4 w-full">
                         {vendors && vendors.length > 0 ? (
-                            vendors.map((vendor) => (
+                            vendors.map((vendor: Vendor) => (
                                 <Link
                                     key={vendor.id}
                                     href={`/dashboard/${vendor.slug}`}
