@@ -30,17 +30,17 @@ export default async function Home() {
         <section className="w-full max-w-xl mt-16 flex flex-col items-center gap-8">
           <h1 className="text-4xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-2">Welcome to the NYC Food Truck Marketplace</h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 text-center mb-6">Discover, order, and manage food trucks all in one place.</p>
-          <div className="flex flex-col md:flex-row gap-4 w-full justify-center">
+          <div className="flex flex-col gap-4 w-full max-w-xs mx-auto justify-center items-center">
             {isManager && (
-              <Link href="/dashboard" className="w-full md:w-auto">
-                <Button className="w-full md:w-auto bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow dark:bg-blue-800 dark:hover:bg-blue-900">Dashboard</Button>
+              <Link href="/dashboard" className="w-full">
+                <Button className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow dark:bg-blue-800 dark:hover:bg-blue-900">Dashboard</Button>
               </Link>
             )}
-            <Link href="/vendors" className="w-full md:w-auto">
-              <Button className="w-full md:w-auto bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold border border-blue-300 shadow dark:bg-gray-800 dark:text-blue-200 dark:border-blue-900 dark:hover:bg-gray-700">Browse Vendors</Button>
+            <Link href="/vendors" className="w-full">
+              <Button className="w-full bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold border border-blue-300 shadow dark:bg-gray-800 dark:text-blue-200 dark:border-blue-900 dark:hover:bg-gray-700">Browse Vendors</Button>
             </Link>
-            <Link href="/vendor-application" className="w-full md:w-auto">
-              <Button className="w-full md:w-auto bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold border border-blue-300 shadow dark:bg-gray-800 dark:text-blue-200 dark:border-blue-900 dark:hover:bg-gray-700">Apply to be a Vendor</Button>
+            <Link href="/vendor-application" className="w-full">
+              <Button className="w-full bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold border border-blue-300 shadow dark:bg-gray-800 dark:text-blue-200 dark:border-blue-900 dark:hover:bg-gray-700">Apply to be a Vendor</Button>
             </Link>
           </div>
         </section>

@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { createClient, getAuth, insertData } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
 export default function VendorApplication() {
-    const supabase = createClient();
     const router = useRouter();
     const [name, setName] = useState("");
     const [slug, setSlug] = useState("");
@@ -18,10 +17,10 @@ export default function VendorApplication() {
         e.preventDefault();
         setLoading(true);
 
-        const { data: authData } = await supabase.auth.getUser();
-        const manager = authData?.user?.id;
+        const authData = await getAuth();
+        const manager = authData?.id;
 
-        await supabase.from('vendor_applications').insert({ name, slug, location, manager, cuisine });
+        await insertData('vendor_applications', { name, slug, location, manager, cuisine });
 
         await fetch('/api/send-email', {
             method: 'POST',

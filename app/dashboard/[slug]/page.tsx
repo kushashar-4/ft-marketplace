@@ -94,6 +94,7 @@ export default function VendorPage() {
             },
             body: JSON.stringify({ email, subject: 'Your FTMarketplace Order Completed', text: 'Your food is ready, please arrive soon!', html: '<strong>Your food is ready, please arrive soon!</strong>' }),
         });
+        window.location.reload();
     };
 
     if (loading) {

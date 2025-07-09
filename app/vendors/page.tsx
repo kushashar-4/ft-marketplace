@@ -4,9 +4,9 @@ import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import { getTableData } from "@/lib/supabase/client";
 
 export default function Vendors() {
-    const supabase = createClient();
     const [vendors, setVendors] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
@@ -14,10 +14,10 @@ export default function Vendors() {
 
     useEffect(() => {
         const fetchVendors = async () => {
-            const { data } = await supabase.from('vendors').select();
+            const data = await getTableData('vendors');
             setVendors(data || []);
             setLoading(false);
-        };
+        }
         fetchVendors();
     }, []);
 

@@ -27,3 +27,15 @@ export async function createClient() {
     },
   );
 }
+
+export async function getTableData(tableName: string, filterVar?: string | null, filterValue?: string | null) {
+  const supabase = await createClient();
+  let query = supabase.from(tableName).select();
+
+  if (filterVar && filterValue) {
+    query = query.eq(filterVar, filterValue);
+  }
+  const { data } = await query;
+
+  return data;
+}
