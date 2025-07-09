@@ -1,5 +1,7 @@
 'use client';
 
+import { createClient } from "@/lib/supabase/client";
+
 type VendorApplication = {
     id: number,
     name: string,
@@ -12,6 +14,8 @@ interface VendorApplicationProps {
 }
 
 export default function VendorApplication({ application }: VendorApplicationProps) {
+    const supabase = createClient();
+
     return (
         <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 flex flex-col gap-3 max-w-md w-full hover:shadow-2xl transition-all duration-200">
             <h2 className="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-2">{application.name}</h2>

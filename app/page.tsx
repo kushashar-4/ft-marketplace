@@ -39,6 +39,9 @@ export default async function Home() {
             <Link href="/vendors" className="w-full md:w-auto">
               <Button className="w-full md:w-auto bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold border border-blue-300 shadow dark:bg-gray-800 dark:text-blue-200 dark:border-blue-900 dark:hover:bg-gray-700">Browse Vendors</Button>
             </Link>
+            <Link href="/vendor-application" className="w-full md:w-auto">
+              <Button className="w-full md:w-auto bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold border border-blue-300 shadow dark:bg-gray-800 dark:text-blue-200 dark:border-blue-900 dark:hover:bg-gray-700">Apply to be a Vendor</Button>
+            </Link>
           </div>
         </section>
       </div>

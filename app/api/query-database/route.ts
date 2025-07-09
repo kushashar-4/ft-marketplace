@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   if (!tableName) {
     return NextResponse.json({ error: 'Missing tableName parameter' }, { status: 400 });
   }
-  
+
   const { data } = await supabase.from(tableName).select();
   return NextResponse.json({ data });
 }

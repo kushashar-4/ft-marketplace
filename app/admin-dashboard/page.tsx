@@ -8,6 +8,8 @@ export default async function AdminDashboard() {
 
     const { data: applications } = await supabase.from('vendor_applications').select();
 
+    console.log(applications)
+
     if(admins?.length === 0) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-800">
