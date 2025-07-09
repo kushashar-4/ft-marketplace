@@ -1,13 +1,11 @@
 "use client";
 
-import { createClient, getAuth, getTableData } from "@/lib/supabase/client";
+import { createClient, getAuth, getTableData, insertData } from "@/lib/supabase/client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { Item } from "@radix-ui/react-dropdown-menu";
-import { get } from "http";
 
 type Order = {
     id: string,
@@ -21,6 +19,13 @@ type OrderItem = {
     id: string, 
     item_name: string,
     order_id: string
+}
+
+type MenuItem = {
+    id: number,
+    item_name: string,
+    item_description: string,
+    item_price: number
 }
 
 export default function VendorPage() {
@@ -110,6 +115,10 @@ export default function VendorPage() {
     }
     if (!vendor) {
         return <div className="text-center text-gray-500 dark:text-gray-400 py-10">Vendor not found.</div>;
+    }
+
+    const addToMenu = async (menuItem: MenuItem) => {
+        await insertData('menu_items', menuItem)
     }
 
     return (
