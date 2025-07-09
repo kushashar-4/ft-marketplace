@@ -11,6 +11,7 @@ export default function VendorApplication() {
     const [slug, setSlug] = useState("");
     const [location, setLocation] = useState("");
     const [cuisine, setCuisine] = useState("");
+    const [manager, setManager] = useState("");
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -21,6 +22,14 @@ export default function VendorApplication() {
         const manager = authData?.user?.id;
 
         await supabase.from('vendor_applications').insert({ name, slug, location, manager, cuisine });
+
+        await fetch('/api/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: 'kushashar13@gmail.com', subject: `New Vendor Application: ${name}`, text: `Name: ${name}\nSlug: ${slug}\nLocation: ${location}\nManager: ${manager}\nCuisine: ${cuisine}`, html: `<strong>Name:</strong> ${name}<br><strong>Slug:</strong> ${slug}<br><strong>Location:</strong> ${location}<br><strong>Manager:</strong> ${manager}<br><strong>Cuisine:</strong> ${cuisine}` }),
+        })
 
         setName("");
         setSlug("");

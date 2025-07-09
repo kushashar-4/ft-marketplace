@@ -1,12 +1,14 @@
 'use client';
 
 import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
 
 type VendorApplication = {
     id: number,
     name: string,
     location: string,
-    slug: string
+    slug: string,
+    manager: string
 }
 
 interface VendorApplicationProps {
@@ -15,6 +17,21 @@ interface VendorApplicationProps {
 
 export default function VendorApplication({ application }: VendorApplicationProps) {
     const supabase = createClient();
+
+    const handleSubmit = async (isAccepted: boolean) => {
+        if(isAccepted) {
+            await supabase.from('vendors').insert({
+                name: application.name,
+                location: application.location,
+                slug: application.slug,
+                manager: application.manager,
+            });
+
+            await supabase.from('vendor_applications').delete().eq('id', application.id);
+        } else {
+            await supabase.from('vendor_applications').delete().eq('id', application.id);
+        }
+    }
 
     return (
         <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 flex flex-col gap-3 max-w-md w-full hover:shadow-2xl transition-all duration-200">
@@ -26,6 +43,20 @@ export default function VendorApplication({ application }: VendorApplicationProp
             <div className="flex flex-col gap-1">
                 <span className="text-sm text-gray-500 dark:text-gray-400">Slug:</span>
                 <span className="text-lg font-mono text-gray-700 dark:text-gray-200">{application.slug}</span>
+            </div>
+            <div className="flex gap-4 mt-4">
+                <Button
+                    onClick={() => handleSubmit(true)}
+                    className="bg-green-600 hover:bg-green-700 text-white font-semibold px-5 py-2 rounded-lg shadow-md transition-colors"
+                >
+                    Accept Application
+                </Button>
+                <Button
+                    onClick={() => handleSubmit(false)}
+                    className="bg-red-600 hover:bg-red-700 text-white font-semibold px-5 py-2 rounded-lg shadow-md transition-colors"
+                >
+                    Decline Application
+                </Button>
             </div>
         </div>
     );
