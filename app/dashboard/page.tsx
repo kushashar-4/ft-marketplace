@@ -1,6 +1,7 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getTableData } from "@/lib/supabase/server";
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import { getAuth } from "@/lib/supabase/server";
 
 type Vendor = {
     id: number,
@@ -10,9 +11,8 @@ type Vendor = {
 }
 
 export default async function Dashboard() {
-    const supabase = await createClient();
-    const { data: authData } = await supabase.auth.getUser();
-    const { data: vendors } = await supabase.from('vendors').select().eq("manager", authData?.user?.id);
+    const user = await getAuth();
+    const vendors = await getTableData('vendors', 'manager', user?.id);
 
     return (
         <main className="min-h-screen flex flex-col items-center bg-gradient-to-br from-blue-950 via-gray-900 to-gray-950 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950">

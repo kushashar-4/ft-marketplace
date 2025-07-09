@@ -39,3 +39,9 @@ export async function getTableData(tableName: string, filterVar?: string | null,
 
   return data;
 }
+
+export async function getAuth() {
+  const supabase = await createClient();
+  const { data: authData } = await supabase.auth.getUser();
+  return authData?.user;
+}

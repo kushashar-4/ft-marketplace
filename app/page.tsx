@@ -4,14 +4,17 @@ import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {redirect} from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getAuth, getTableData } from "@/lib/supabase/server";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export default async function Home() {
-  const supabase = await createClient();
-  const { data: authData } = await supabase.auth.getUser();
-  const { data: vendors } = await supabase.from('vendors').select().eq("manager", authData?.user?.id);
+  // const supabase = await createClient();
+  const user = await getAuth();
+  const vendors = await getTableData('vendors', 'manager', user?.id)
+  const admins = await getTableData('administrators', 'admin_id', user?.id)
+
   const isManager = vendors && vendors.length > 0;
+  const isAdmin = admins && admins.length > 0;
 
   return (
     <main className="min-h-screen flex flex-col items-center bg-gradient-to-br from-blue-950 via-gray-900 to-gray-950 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950">
@@ -33,7 +36,12 @@ export default async function Home() {
           <div className="flex flex-col gap-4 w-full max-w-xs mx-auto justify-center items-center">
             {isManager && (
               <Link href="/dashboard" className="w-full">
-                <Button className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow dark:bg-blue-800 dark:hover:bg-blue-900">Dashboard</Button>
+                <Button className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow dark:bg-blue-800 dark:hover:bg-blue-900">Vendor Dashboard</Button>
+              </Link>
+            )}
+            {isAdmin && (
+              <Link href="/admin-dashboard" className="w-full">
+                <Button className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow dark:bg-blue-800 dark:hover:bg-blue-900">Admin Dashboard</Button>
               </Link>
             )}
             <Link href="/vendors" className="w-full">

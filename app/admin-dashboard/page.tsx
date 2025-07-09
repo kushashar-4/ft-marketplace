@@ -1,14 +1,10 @@
-import { createClient } from "@/lib/supabase/server";
+import { getAuth, getTableData } from "@/lib/supabase/server";
 import VendorApplication from "./VendorApplication";
 
 export default async function AdminDashboard() {
-    const supabase = await createClient();
-    const { data: authData } = await supabase.auth.getUser();
-    const { data: admins } = await supabase.from('administrators').select().eq("admin_id", authData?.user?.id);
-
-    const { data: applications } = await supabase.from('vendor_applications').select();
-
-    console.log(applications)
+    const user = await getAuth();
+    const admins = await getTableData('administrators', 'admin_id', user?.id);
+    const applications = await getTableData('vendor_applications');
 
     if(admins?.length === 0) {
         return (

@@ -1,6 +1,6 @@
 'use client';
 
-import { createClient } from "@/lib/supabase/client";
+import { deleteData, insertData } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 
 type VendorApplication = {
@@ -16,20 +16,18 @@ interface VendorApplicationProps {
 }
 
 export default function VendorApplication({ application }: VendorApplicationProps) {
-    const supabase = createClient();
-
     const handleSubmit = async (isAccepted: boolean) => {
         if(isAccepted) {
-            await supabase.from('vendors').insert({
+            await insertData('vendors', {
                 name: application.name,
                 location: application.location,
                 slug: application.slug,
                 manager: application.manager,
             });
 
-            await supabase.from('vendor_applications').delete().eq('id', application.id);
+            await deleteData('vendor_applications', 'id', application.id)
         } else {
-            await supabase.from('vendor_applications').delete().eq('id', application.id);
+            await deleteData('vendor_applications', 'id', application.id)
         }
     }
 

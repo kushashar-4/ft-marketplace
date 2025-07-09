@@ -1,12 +1,13 @@
 "use client";
 
-import { createClient } from "@/lib/supabase/client";
+import { createClient, getAuth, getTableData } from "@/lib/supabase/client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Item } from "@radix-ui/react-dropdown-menu";
+import { get } from "http";
 
 type Order = {
     id: string,
@@ -44,19 +45,26 @@ export default function VendorPage() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const { data: authData } = await supabase.auth.getUser();
-            const { data: vendorData } = await supabase.from('vendors').select().eq("slug", slug).single();
-            if(vendorData && vendorData.manager !== authData?.user?.id) {
+            const user = await getAuth();
+            const vendors = await getTableData('vendors', 'slug', slug);
+            if(vendors && vendors[0]?.manager !== user?.id) {
                 window.location.href = '/';
                 return;
             }
-            setVendor(vendorData);
+            if(vendors) {
+                setVendor(vendors[0]);
+            }
 
-            const { data: orderData } = await supabase.from('orders').select().eq("vendor_id", vendorData.id);
-            setOrders(orderData);
+            const orders = await getTableData('orders', 'vendor_id', vendors?.[0]?.id);
+            setOrders(orders);
 
             const { data: orderItemsData } = await supabase.from('order_items').select();
             setOrderItems(orderItemsData || []);
+
+            const orderItems = await getTableData('order_items', 'vendor_id', vendors?.[0]?.id);
+            if(orderItems) {
+                setOrderItems(orderItems);
+            }
         }
         finally {
             setLoading(false);

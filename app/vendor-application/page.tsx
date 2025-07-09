@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createClient, getAuth, insertData } from "@/lib/supabase/client";
+import { getAuth, insertData } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
 export default function VendorApplication() {

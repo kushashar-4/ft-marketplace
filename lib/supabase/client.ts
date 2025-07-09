@@ -8,7 +8,7 @@ export function createClient() {
   );
 }
 
-export async function getTableData(tableName: string, filterVar?: string | null, filterValue?: string | null) {
+export async function getTableData(tableName: string, filterVar?: string | null, filterValue?: any | number | null) {
   const supabase = createClient();
   let query = supabase.from(tableName).select();
 
@@ -23,6 +23,13 @@ export async function getTableData(tableName: string, filterVar?: string | null,
 export async function insertData(tableName: string, data: any) {
   const supabase = createClient();
   await supabase.from(tableName).insert(data);
+}
+
+export async function deleteData(tableName: string, filterVar?: string | null, filterValue?: string | number | null) {
+  const supabase = createClient();
+  if(filterVar && filterValue) {
+    await supabase.from(tableName).delete().eq(filterVar, filterValue);
+  }
 }
 
 export async function getAuth() {
