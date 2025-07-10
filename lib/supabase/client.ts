@@ -25,7 +25,7 @@ export async function insertData(tableName: string, data: any) {
   await supabase.from(tableName).insert(data);
 }
 
-export async function deleteData(tableName: string, filterVar?: string | null, filterValue?: string | number | null) {
+export async function deleteTableData(tableName: string, filterVar?: string | null, filterValue?: string | number | null) {
   const supabase = createClient();
   if(filterVar && filterValue) {
     await supabase.from(tableName).delete().eq(filterVar, filterValue);

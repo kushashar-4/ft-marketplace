@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteData, insertData } from "@/lib/supabase/client";
+import { deleteTableData, insertData } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 
 type VendorApplication = {
@@ -25,9 +25,9 @@ export default function VendorApplication({ application }: VendorApplicationProp
                 manager: application.manager,
             });
 
-            await deleteData('vendor_applications', 'id', application.id)
+            await deleteTableData('vendor_applications', 'id', application.id)
         } else {
-            await deleteData('vendor_applications', 'id', application.id)
+            await deleteTableData('vendor_applications', 'id', application.id)
         }
     }
 
