@@ -1,6 +1,6 @@
 "use client";
 
-import { createClient, getAuth, getTableData, insertData } from "@/lib/supabase/client";
+import { createClient, getAuth, getTableData, insertTableData } from "@/lib/supabase/client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -117,10 +117,6 @@ export default function VendorPage() {
         return <div className="text-center text-gray-500 dark:text-gray-400 py-10">Vendor not found.</div>;
     }
 
-    const addToMenu = async (menuItem: MenuItem) => {
-        await insertData('menu_items', menuItem)
-    }
-
     return (
         <main className="min-h-screen flex flex-col items-center bg-gradient-to-br from-blue-950 via-gray-900 to-gray-950 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950">
             <div className="flex-1 w-full flex flex-col gap-20 items-center">
@@ -137,6 +133,9 @@ export default function VendorPage() {
                 <section className="w-full max-w-xl mt-16 flex flex-col items-center gap-8">
                     <h1 className="text-4xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-2">{vendor.name}</h1>
                     <p className="text-lg text-gray-600 dark:text-gray-300 text-center mb-6">Current Orders</p>
+                    <Link href={`/dashboard/${slug}/menu-manager`} className="w-full">
+                        <Button className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow dark:bg-blue-800 dark:hover:bg-blue-900 mb-8">Manage Menu</Button>
+                    </Link>
                     <div className="space-y-6 w-full">
                         {orders && orders.length > 0 ? (
                             orders.map((order: Order) => (

@@ -6,14 +6,8 @@ import { getTableData } from "@/lib/supabase/server";
 export default async function VendorPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
 
-    // const { data: vendor } = await supabase.from('vendors').select().eq("slug", slug).single();
-    // const { data: menuItems } = await supabase.from('menu_items').select().eq("id", vendor.id);
-
     const vendor = await getTableData('vendors', 'slug', slug);
-    const menuItems = await getTableData('menu_items', 'id', vendor?.[0]?.id);
-
-    console.log("Vendor:", vendor);
-    console.log("Menu Items:", menuItems);
+    const menuItems = await getTableData('menu_items', 'vendor_id', vendor?.[0]?.id);
 
     if (vendor && menuItems) {
         return (

@@ -20,9 +20,14 @@ export async function getTableData(tableName: string, filterVar?: string | null,
   return data;
 }
 
-export async function insertData(tableName: string, data: any) {
+export async function insertTableData(tableName: string, data: any) {
   const supabase = createClient();
   await supabase.from(tableName).insert(data);
+}
+
+export async function updateTableData(tableName: string, data: any, filterVar: string, filterValue: string | number) {
+  const supabase = createClient();
+  await supabase.from(tableName).update(data).eq(filterVar, filterValue);
 }
 
 export async function deleteTableData(tableName: string, filterVar?: string | null, filterValue?: string | number | null) {

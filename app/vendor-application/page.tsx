@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { getAuth, insertData } from "@/lib/supabase/client";
+import { getAuth, insertTableData } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
 export default function VendorApplication() {
@@ -20,7 +20,7 @@ export default function VendorApplication() {
         const authData = await getAuth();
         const manager = authData?.id;
 
-        await insertData('vendor_applications', { name, slug, location, manager, cuisine });
+        await insertTableData('vendor_applications', { name, slug, location, manager, cuisine });
 
         await fetch('/api/send-email', {
             method: 'POST',

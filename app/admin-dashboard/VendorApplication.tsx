@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteTableData, insertData } from "@/lib/supabase/client";
+import { deleteTableData, insertTableData } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 
 type VendorApplication = {
@@ -18,7 +18,7 @@ interface VendorApplicationProps {
 export default function VendorApplication({ application }: VendorApplicationProps) {
     const handleSubmit = async (isAccepted: boolean) => {
         if(isAccepted) {
-            await insertData('vendors', {
+            await insertTableData('vendors', {
                 name: application.name,
                 location: application.location,
                 slug: application.slug,
