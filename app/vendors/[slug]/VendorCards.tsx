@@ -2,18 +2,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-
-type MenuItem = {
-    item_name: string,
-    item_price: number,
-    item_description: string,
-}
-
-type Vendor = {
-    id: number,
-    name: string,
-    location: string,
-}
+import { MenuItem, Vendor } from "@/lib/globalTypes";
 
 interface VendorCardsProps {
     vendor: Vendor,
@@ -21,7 +10,7 @@ interface VendorCardsProps {
 }
 
 export default function VendorCards({ vendor, menuItemsData }: VendorCardsProps) {
-    const [menuItems, setMenuItems] = useState<any[]>([]);
+    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [userEmail, setUserEmail] = useState<string>("");

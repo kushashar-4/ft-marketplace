@@ -3,12 +3,10 @@ import { AuthButton } from "@/components/auth-button";
 import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {redirect} from "next/navigation";
 import { createClient, getAuth, getTableData } from "@/lib/supabase/server";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export default async function Home() {
-  // const supabase = await createClient();
   const user = await getAuth();
   const vendors = await getTableData('vendors', 'manager', user?.id)
   const admins = await getTableData('administrators', 'admin_id', user?.id)

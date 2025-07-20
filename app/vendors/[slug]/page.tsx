@@ -1,5 +1,3 @@
-import { createClient } from "@/lib/supabase/server";
-import { Button } from "@/components/ui/button";
 import VendorCards from "./VendorCards";
 import { getTableData } from "@/lib/supabase/server";
 

@@ -6,36 +6,16 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-
-type Order = {
-    id: string,
-    vendor_id: string, 
-    user_id: string,
-    total_price: number,
-    client_email: string
-}
-
-type OrderItem = {
-    id: string, 
-    item_name: string,
-    order_id: string
-}
-
-type MenuItem = {
-    id: number,
-    item_name: string,
-    item_description: string,
-    item_price: number
-}
+import { Vendor, Order, OrderItem } from "@/lib/globalTypes";
 
 export default function VendorPage() {
     const params = useParams();
     const slug = params.slug as string;
     const supabase = createClient();
 
-    const [vendor, setVendor] = useState<any>();
-    const [orders, setOrders] = useState<any>([]);
-    const [orderItems, setOrderItems] = useState<any[]>([]);
+    const [vendor, setVendor] = useState<Vendor>();
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
     const [loading, setLoading] = useState(true);
     const [email, setEmail] = useState<string>("");
 
@@ -61,7 +41,7 @@ export default function VendorPage() {
             }
 
             const orders = await getTableData('orders', 'vendor_id', vendors?.[0]?.id);
-            setOrders(orders);
+            setOrders(orders? orders : []);
 
             const { data: orderItemsData } = await supabase.from('order_items').select();
             setOrderItems(orderItemsData || []);

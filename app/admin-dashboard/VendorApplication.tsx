@@ -2,14 +2,7 @@
 
 import { deleteTableData, insertTableData } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-
-type VendorApplication = {
-    id: number,
-    name: string,
-    location: string,
-    slug: string,
-    manager: string
-}
+import type { VendorApplication } from "@/lib/globalTypes";
 
 interface VendorApplicationProps {
     application: VendorApplication

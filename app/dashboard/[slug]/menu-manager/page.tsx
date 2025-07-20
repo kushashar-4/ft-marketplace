@@ -3,14 +3,8 @@
 import { deleteTableData, getTableData, insertTableData, updateTableData } from "@/lib/supabase/client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { MenuItem } from "@/lib/globalTypes";
 
-
-type MenuItem = {
-    id: number,
-    item_name: string,
-    item_description: string,
-    item_price: number
-}
 
 export default function MenuManager() {
     const params = useParams();
