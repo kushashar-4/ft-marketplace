@@ -1,16 +1,16 @@
 "use client";
 
-import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { getTableData } from "@/lib/supabase/client";
+import { Vendor } from "@/lib/globalTypes";
 
 export default function Vendors() {
-    const [vendors, setVendors] = useState<any[]>([]);
+    const [vendors, setVendors] = useState<Vendor[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
-    const [cuisineQuery, setCuisineQuery] = useState("")
+    // const [cuisineQuery, setCuisineQuery] = useState("")
 
     useEffect(() => {
         const fetchVendors = async () => {
@@ -43,7 +43,7 @@ export default function Vendors() {
                     ) : (
                         <ul className="space-y-4 w-full">
                             {vendors.length > 0 ? (
-                                vendors.filter(vendor => vendor.name.toLowerCase().includes(searchQuery.toLowerCase())).map((vendor: any) => (
+                                vendors.filter(vendor => vendor.name.toLowerCase().includes(searchQuery.toLowerCase())).map((vendor: Vendor) => (
                                     <li key={vendor.id}>
                                         <Link
                                             href={`/vendors/${vendor.slug}`}

@@ -3,7 +3,7 @@ import { AuthButton } from "@/components/auth-button";
 import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { createClient, getAuth, getTableData } from "@/lib/supabase/server";
+import { getAuth, getTableData } from "@/lib/supabase/server";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export default async function Home() {

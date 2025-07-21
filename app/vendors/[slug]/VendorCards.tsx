@@ -67,7 +67,7 @@ export default function VendorCards({ vendor, menuItemsData }: VendorCardsProps)
             <h2 className="text-xl font-semibold mb-6 text-gray-700 dark:text-gray-200 text-center">Menu Items</h2>
                 <div className="space-y-4 mb-8">
                     {menuItems && menuItems.length > 0 ? (
-                        menuItems.map((item: any) => (
+                        menuItems.map((item: MenuItem) => (
                             <div key={item.id} className="bg-white dark:bg-gray-900 p-4 rounded-lg shadow border border-gray-200 dark:border-gray-700 flex flex-col md:flex-row md:items-center md:justify-between">
                                 <div>
                                     <span className="text-lg font-medium text-gray-900 dark:text-gray-100">{item.item_name}</span>

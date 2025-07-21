@@ -10,7 +10,7 @@ export default function VendorApplication() {
     const [slug, setSlug] = useState("");
     const [location, setLocation] = useState("");
     const [cuisine, setCuisine] = useState("");
-    const [manager, setManager] = useState("");
+    // const [manager, setManager] = useState("");
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { createClient, getAuth, getTableData, insertTableData } from "@/lib/supabase/client";
+import { createClient, getAuth, getTableData } from "@/lib/supabase/client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";

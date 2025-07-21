@@ -1,5 +1,5 @@
 import { createBrowserClient } from "@supabase/ssr";
-import { table } from "console";
+// import { table } from "console";
 
 export function createClient() {
   return createBrowserClient(
@@ -8,7 +8,7 @@ export function createClient() {
   );
 }
 
-export async function getTableData(tableName: string, filterVar?: string | null, filterValue?: any | number | null) {
+export async function getTableData(tableName: string, filterVar?: string | null, filterValue?: string | number | null) {
   const supabase = createClient();
   let query = supabase.from(tableName).select();
 
@@ -20,12 +20,12 @@ export async function getTableData(tableName: string, filterVar?: string | null,
   return data;
 }
 
-export async function insertTableData(tableName: string, data: any) {
+export async function insertTableData(tableName: string, data: Object) {
   const supabase = createClient();
   await supabase.from(tableName).insert(data);
 }
 
-export async function updateTableData(tableName: string, data: any, filterVar: string, filterValue: string | number) {
+export async function updateTableData(tableName: string, data: Object, filterVar: string, filterValue: string | number) {
   const supabase = createClient();
   await supabase.from(tableName).update(data).eq(filterVar, filterValue);
 }

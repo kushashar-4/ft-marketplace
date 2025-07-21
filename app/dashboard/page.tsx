@@ -1,14 +1,8 @@
-import { createClient, getTableData } from "@/lib/supabase/server";
+import { getTableData } from "@/lib/supabase/server";
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { getAuth } from "@/lib/supabase/server";
-
-type Vendor = {
-    id: number,
-    name: string,
-    location: string,
-    slug: string
-}
+import { Vendor } from "@/lib/globalTypes";
 
 export default async function Dashboard() {
     const user = await getAuth();
