@@ -20,12 +20,12 @@ export async function getTableData(tableName: string, filterVar?: string | null,
   return data;
 }
 
-export async function insertTableData(tableName: string, data: Object) {
+export async function insertTableData(tableName: string, data: object) {
   const supabase = createClient();
   await supabase.from(tableName).insert(data);
 }
 
-export async function updateTableData(tableName: string, data: Object, filterVar: string, filterValue: string | number) {
+export async function updateTableData(tableName: string, data: object, filterVar: string, filterValue: string | number) {
   const supabase = createClient();
   await supabase.from(tableName).update(data).eq(filterVar, filterValue);
 }
