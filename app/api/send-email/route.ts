@@ -17,11 +17,11 @@ export async function POST(req: NextRequest) {
     await sgMail.send(msg);
     return NextResponse.json({ success: true });
   } 
-  catch (error: any) {
-    console.log('SendGrid error:', error);
-    if (error.response) {
-        console.log('SendGrid response error:', error.response.body);
+  catch (error: unknown) {
+    let errorMessage = 'Unknown error';
+    if (error instanceof Error) {
+      errorMessage = error.message;
     }
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ success: false, error: errorMessage }, { status: 500 });
   }
 }

@@ -1,4 +1,5 @@
 export type MenuItem = {
+    id: number,
     item_name: string,
     item_price: number,
     item_description: string,
@@ -23,4 +24,12 @@ export type OrderItem = {
     id: string, 
     item_name: string,
     order_id: string
+}
+
+export type VendorApplication = {
+    id: number,
+    name: string,
+    location: string,
+    slug: string,
+    manager: string
 }

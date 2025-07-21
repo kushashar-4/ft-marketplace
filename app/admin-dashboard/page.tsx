@@ -1,5 +1,6 @@
 import { getAuth, getTableData } from "@/lib/supabase/server";
 import VendorApplication from "./VendorApplication";
+import Link from 'next/link';
 
 export default async function AdminDashboard() {
     const user = await getAuth();
@@ -24,7 +25,7 @@ export default async function AdminDashboard() {
                 <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 bg-white/80 dark:bg-gray-900/80 backdrop-blur">
                     <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
                         <div className="flex gap-5 items-center font-semibold text-blue-700 dark:text-blue-300">
-                            <a href="/" className="text-2xl tracking-tight font-bold hover:text-blue-900 dark:hover:text-blue-200 transition">NYC Food Truck Market</a>
+                            <Link href="/" className="text-2xl tracking-tight font-bold hover:text-blue-900 dark:hover:text-blue-200 transition">NYC Food Truck Market</Link>
                         </div>
                     </div>
                 </nav>
