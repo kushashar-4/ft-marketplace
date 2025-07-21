@@ -36,7 +36,6 @@ export async function getTableData(tableName: string, filterVar?: string | null,
     query = query.eq(filterVar, filterValue);
   }
   const { data } = await query;
-
   return data;
 }
 

@@ -8,8 +8,13 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export default async function Home() {
   const user = await getAuth();
-  const vendors = await getTableData('vendors', 'manager', user?.id)
-  const admins = await getTableData('administrators', 'admin_id', user?.id)
+  let vendors = [];
+  let admins = [];
+
+  if(user) {
+    vendors = (await getTableData('vendors', 'manager', user.id)) ?? [];
+    admins = (await getTableData('administrators', 'admin_id', user.id)) ?? [];
+  }
 
   const isManager = vendors && vendors.length > 0;
   const isAdmin = admins && admins.length > 0;
