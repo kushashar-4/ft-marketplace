@@ -103,23 +103,23 @@ export default function MenuManager() {
 
                             </li>
                         ))}
-                        <button onClick={() => (setAddingItem(!addingItem))} className="mt-4 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-400 transition">
-                            Add Item
-                        </button>
-                        {addingItem && (
-                        <form onSubmit={handleAddItem} className="flex flex-col gap-4 mt-4 p-6 bg-blue-50 dark:bg-gray-800 rounded-lg shadow border border-blue-100 dark:border-gray-800">
-                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Item Name</label>
-                            <input type="text" value={newItem.item_name} onChange={(e) => setNewItem({ ...newItem, item_name: e.target.value })} placeholder="Item Name" required className="w-full p-2 rounded-lg border border-blue-300 dark:border-blue-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition" />
-                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Item Description</label>
-                            <input type="text" value={newItem.item_description} onChange={(e) => setNewItem({ ...newItem, item_description: e.target.value })} placeholder="Item Description" required className="w-full p-2 rounded-lg border border-blue-300 dark:border-blue-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition" />
-                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Item Price</label>
-                            <input type="number" onChange={(e) => setNewItem({ ...newItem, item_price: Number(e.target.value) })} placeholder="Item Price" required className="w-full p-2 rounded-lg border border-blue-300 dark:border-blue-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition" />
-                            <button type="submit" className="mt-2 px-4 py-2 bg-green-600 dark:bg-green-500 text-white rounded-lg font-semibold shadow hover:bg-green-700 dark:hover:bg-green-400 transition">Add Item</button>
-                        </form>
-                        )}
                     </ul>
                 ) : (
                     <div className="text-center text-gray-500 dark:text-gray-400">No menu items found.</div>
+                )}
+                <button onClick={() => (setAddingItem(!addingItem))} className="mt-4 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-400 transition">
+                    Add Item
+                </button>
+                {addingItem && (
+                <form onSubmit={handleAddItem} className="flex flex-col gap-4 mt-4 p-6 bg-blue-50 dark:bg-gray-800 rounded-lg shadow border border-blue-100 dark:border-gray-800">
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Item Name</label>
+                    <input type="text" value={newItem.item_name} onChange={(e) => setNewItem({ ...newItem, item_name: e.target.value })} placeholder="Item Name" required className="w-full p-2 rounded-lg border border-blue-300 dark:border-blue-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition" />
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Item Description</label>
+                    <input type="text" value={newItem.item_description} onChange={(e) => setNewItem({ ...newItem, item_description: e.target.value })} placeholder="Item Description" required className="w-full p-2 rounded-lg border border-blue-300 dark:border-blue-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition" />
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Item Price</label>
+                    <input type="number" onChange={(e) => setNewItem({ ...newItem, item_price: Number(e.target.value) })} placeholder="Item Price" required className="w-full p-2 rounded-lg border border-blue-300 dark:border-blue-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition" />
+                    <button type="submit" className="mt-2 px-4 py-2 bg-green-600 dark:bg-green-500 text-white rounded-lg font-semibold shadow hover:bg-green-700 dark:hover:bg-green-400 transition">Add Item</button>
+                </form>
                 )}
             </div>
         </main>

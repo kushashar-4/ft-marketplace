@@ -22,7 +22,6 @@ export default async function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center bg-gradient-to-br from-blue-950 via-gray-900 to-gray-950 dark:from-gray-950 dark:via-gray-900 dark:to-blue-950">
       <div className="flex-1 w-full flex flex-col gap-12 items-center">
-        {/* Responsive Navbar */}
         <nav className="w-full flex justify-center border-b border-b-foreground/10 bg-white/80 dark:bg-gray-900/80 backdrop-blur sticky top-0 z-20">
           <div className="w-full max-w-5xl flex flex-col sm:flex-row justify-between items-center p-2 sm:p-3 px-2 sm:px-5 text-sm gap-2 sm:gap-0">
             <div className="flex gap-3 sm:gap-5 items-center font-semibold text-blue-700 dark:text-blue-300 w-full sm:w-auto justify-center sm:justify-start">
@@ -38,21 +37,26 @@ export default async function Home() {
           <h1 className="text-2xl sm:text-4xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-2">Welcome to the NYC Food Truck Marketplace</h1>
           <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 text-center mb-4 sm:mb-6">Discover, order, and manage food trucks all in one place.</p>
           <div className="flex flex-col gap-3 sm:gap-4 w-full max-w-xs mx-auto justify-center items-center">
+            {!user && (
+              <Link href="/auth" className="w-full">
+                <Button className="w-full bg-blue-700 hover:bg-blue-800 text-white shadow dark:bg-blue-800 dark:hover:bg-blue-900 py-3 text-base sm:text-lg">Sign In / Sign Up</Button>
+              </Link>
+            )}
             {isManager && (
               <Link href="/dashboard" className="w-full">
-                <Button className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow dark:bg-blue-800 dark:hover:bg-blue-900 py-3 text-base sm:text-lg">Vendor Dashboard</Button>
+                <Button className="w-full bg-blue-700 hover:bg-blue-800 text-white shadow dark:bg-blue-800 dark:hover:bg-blue-900 py-3 text-base sm:text-lg">Vendor Dashboard</Button>
               </Link>
             )}
             {isAdmin && (
               <Link href="/admin-dashboard" className="w-full">
-                <Button className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold shadow dark:bg-blue-800 dark:hover:bg-blue-900 py-3 text-base sm:text-lg">Admin Dashboard</Button>
+                <Button className="w-full bg-blue-700 hover:bg-blue-800 text-white shadow dark:bg-blue-800 dark:hover:bg-blue-900 py-3 text-base sm:text-lg">Admin Dashboard</Button>
               </Link>
             )}
             <Link href="/vendors" className="w-full">
-              <Button className="w-full bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold border border-blue-300 shadow dark:bg-gray-800 dark:text-blue-200 dark:border-blue-900 dark:hover:bg-gray-700 py-3 text-base sm:text-lg">Browse Vendors</Button>
+              <Button className="w-full bg-blue-100 hover:bg-blue-200 text-blue-800 border border-blue-300 shadow dark:bg-gray-800 dark:text-blue-200 dark:border-blue-900 dark:hover:bg-gray-700 py-3 text-base sm:text-lg">Browse Vendors</Button>
             </Link>
             <Link href="/vendor-application" className="w-full">
-              <Button className="w-full bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold border border-blue-300 shadow dark:bg-gray-800 dark:text-blue-200 dark:border-blue-900 dark:hover:bg-gray-700 py-3 text-base sm:text-lg">Apply to be a Vendor</Button>
+              <Button className="w-full bg-blue-100 hover:bg-blue-200 text-blue-800 border border-blue-300 shadow dark:bg-gray-800 dark:text-blue-200 dark:border-blue-900 dark:hover:bg-gray-700 py-3 text-base sm:text-lg">Apply to be a Vendor</Button>
             </Link>
           </div>
         </section>

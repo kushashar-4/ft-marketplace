@@ -22,6 +22,8 @@ export default function VendorApplication({ application }: VendorApplicationProp
         } else {
             await deleteTableData('vendor_applications', 'id', application.id)
         }
+
+        window.location.reload();
     }
 
     return (
