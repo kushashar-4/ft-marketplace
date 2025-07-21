@@ -8,7 +8,7 @@ import { MenuItem } from "@/lib/globalTypes";
 
 export default function MenuManager() {
     const params = useParams();
-    const slug = params.slug;
+    const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
 
     const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
     const [vendorID, setVendorID] = useState<number>(0);
