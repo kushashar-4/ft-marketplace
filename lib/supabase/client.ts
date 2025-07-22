@@ -22,7 +22,13 @@ export async function getTableData(tableName: string, filterVar?: string | null,
 
 export async function insertTableData(tableName: string, data: object) {
   const supabase = createClient();
-  await supabase.from(tableName).insert(data);
+  try {
+    await supabase.from(tableName).insert(data);
+    console.log(`Data inserted into ${tableName}:`, data);
+  } catch (error) {
+    console.error(`Error inserting data into ${tableName}:`, error);
+    throw error;
+  }
 }
 
 export async function updateTableData(tableName: string, data: object, filterVar: string, filterValue: string | number) {

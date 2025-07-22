@@ -17,15 +17,6 @@ export default function VendorPage() {
     const [orders, setOrders] = useState<Order[]>([]);
     const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
     const [loading, setLoading] = useState(true);
-    const [email, setEmail] = useState<string>("");
-
-    useEffect(() => {
-        const fetchEmail = async () => {
-            const { data: authData } = await supabase.auth.getUser();
-            setEmail(authData?.user?.email || "");
-        }
-        fetchEmail();
-    }, []);
 
     const fetchData = async () => {
         setLoading(true);
@@ -78,6 +69,8 @@ export default function VendorPage() {
     }, [slug]);
 
     const resolveOrder = async (orderId: string) => {
+        const orderArr = await getTableData('orders', 'id', orderId);
+        const email = orderArr?.[0]?.client_email;
         await supabase.from("orders").delete().eq("id", orderId);
         
         await fetch('/api/send-email', {

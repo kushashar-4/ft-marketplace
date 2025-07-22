@@ -16,6 +16,7 @@ export default function VendorApplication({ application }: VendorApplicationProp
                 location: application.location,
                 slug: application.slug,
                 manager: application.manager,
+                manager_email: application.manager_email
             });
 
             await deleteTableData('vendor_applications', 'id', application.id)

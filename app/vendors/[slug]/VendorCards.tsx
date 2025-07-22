@@ -61,14 +61,14 @@ export default function VendorCards({ vendor, menuItemsData }: VendorCardsProps)
             '<div><h1>Your food will be ready soon!</h1><h2>Your food items</h2><ul>' + selectedItems.map((item) => '<li>' + item + '</li>').join('') + '</ul><h2>Total price: $' + totalPrice + '</h2></div>' }),
         });
 
-        const managerEmail = await getTableData('auth', 'id', vendor.manager);
+        console.log(vendor.manager_email);
 
         await fetch('/api/send-email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email: managerEmail, subject : 'New Order Notification', 
+            body: JSON.stringify({ email: vendor.manager_email, subject : 'New Order Notification', 
             text: 'You have a new order!', 
             html: 
             '<div><h1>You have a new order!</h1><h2>Items to prepare</h2><ul>' + selectedItems.map((item) => '<li>' + item + '</li>').join('') + '</ul><h2>Total price: $' + totalPrice + '</h2></div>' + `<h2>Customer Email: ${userEmail}</h2>` }),

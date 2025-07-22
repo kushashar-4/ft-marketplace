@@ -10,7 +10,8 @@ export type Vendor = {
     name: string,
     location: string,
     slug: string,
-    manager: string
+    manager: string, 
+    manager_email: string
 }
 
 export type Order = {
@@ -32,5 +33,6 @@ export type VendorApplication = {
     name: string,
     location: string,
     slug: string,
-    manager: string
+    manager: string,
+    manager_email: string
 }

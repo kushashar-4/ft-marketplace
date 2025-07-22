@@ -10,7 +10,6 @@ export default function VendorApplication() {
     const [slug, setSlug] = useState("");
     const [location, setLocation] = useState("");
     const [cuisine, setCuisine] = useState("");
-    // const [manager, setManager] = useState("");
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -19,8 +18,11 @@ export default function VendorApplication() {
 
         const authData = await getAuth();
         const manager = authData?.id;
+        const manager_email = authData?.email;
 
-        await insertTableData('vendor_applications', { name, slug, location, manager, cuisine });
+        console.log(manager_email)
+
+        await insertTableData('vendor_applications', { name, slug, location, manager, cuisine, manager_email });
 
         await fetch('/api/send-email', {
             method: 'POST',
