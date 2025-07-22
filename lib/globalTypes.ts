@@ -9,7 +9,8 @@ export type Vendor = {
     id: number,
     name: string,
     location: string,
-    slug: string
+    slug: string,
+    manager: string
 }
 
 export type Order = {

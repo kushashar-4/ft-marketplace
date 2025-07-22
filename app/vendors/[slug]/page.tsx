@@ -1,5 +1,6 @@
 import VendorCards from "./VendorCards";
 import { getTableData } from "@/lib/supabase/server";
+import { Vendor } from "@/lib/globalTypes";
 
 export default async function VendorPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
@@ -10,7 +11,7 @@ export default async function VendorPage({ params }: { params: Promise<{ slug: s
     if (vendor && menuItems) {
         return (
             <div>
-                <VendorCards vendor={vendor[0]} menuItemsData={menuItems} />
+                <VendorCards vendor={vendor[0] as Vendor} menuItemsData={menuItems} />
             </div>
         );
     }
